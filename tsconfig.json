@@ -34,11 +34,10 @@
     "moduleDetection": "force",
     "skipLibCheck": true,
 
-    "baseUrl": ".",
     "paths": {
-      "@interface/*": [ "src/interface/*" ],
-      "@lib/*": ["src/lib/*"],
-      "@routes/*": ["src/routes/*"]
+      "@interface/*": [ "./src/interface/*" ],
+      "@lib/*": ["./src/lib/*"],
+      "@routes/*": ["./src/routes/*"]
     }
   }
 }
