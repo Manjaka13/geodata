@@ -2,23 +2,23 @@ FROM node:20-bookworm
 
 WORKDIR /app
 
-# Install build tools needed for sqlite3 native module
+# install build deps
 RUN apt-get update && apt-get install -y \
     python3 \
     make \
     g++ \
+    build-essential \
     sqlite3 \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy package files first
 COPY package*.json ./
 
-# Clean install INSIDE container
-RUN npm install
+# FORCE clean install (no prebuilt binaries reused)
+RUN npm cache clean --force
+RUN npm install --build-from-source
 
-# Copy source
 COPY . .
 
 EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD ["node", "index.js"]
