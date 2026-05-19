@@ -1,10 +1,12 @@
-const router = require("express").Router();
-const { ROUTES } = require("../lib/const.js");
-const { generateDoc } = require("../lib/utils.js");
+import { Router } from "express";
+import { ROUTES } from "../lib/const.js";
+import { generateDoc } from "../lib/utils.js";
 
 /**
  * Main route displays doc
  */
+
+const router = Router();
 
 router.get("/", (req, res) => {
 	try {
@@ -15,4 +17,4 @@ router.get("/", (req, res) => {
 	}
 });
 
-module.exports = { path: "", router };
+export default { path: "/", router };

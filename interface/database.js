@@ -1,4 +1,7 @@
-const sqlite3 = require("sqlite3").verbose();
+import sqlite3pkg from "sqlite3";
+
+const sqlite3 = sqlite3pkg.verbose();
+let db;
 
 /**
  * SQLite3 communication interface
@@ -7,9 +10,7 @@ const sqlite3 = require("sqlite3").verbose();
 const database = {
   connect() {
     return new Promise((resolve, reject) => {
-      db = new sqlite3.Database("./db.sqlite", sqlite3.OPEN_READONLY, function (
-        err,
-      ) {
+      db = new sqlite3.Database("./db.sqlite", sqlite3.OPEN_READONLY, (err) => {
         if (err) reject(err);
         else resolve();
       });
@@ -28,6 +29,7 @@ const database = {
   getAllCities() {
     return new Promise((resolve, reject) => {
       const request = "SELECT * from cities";
+
       db.all(request, (err, row) => {
         if (err) reject(err);
         else resolve(row);
@@ -37,7 +39,9 @@ const database = {
 
   getAllCountries() {
     return new Promise((resolve, reject) => {
-      db.all(`SELECT * from countries`, (err, row) => {
+      const request = "SELECT * from countries";
+
+      db.all(request, (err, row) => {
         if (err) reject(err);
         else resolve(row);
       });
@@ -46,19 +50,23 @@ const database = {
 
   getCountry(name) {
     return new Promise((resolve, reject) => {
-      if (name) {
-        const request = `SELECT * from countries WHERE name = ? COLLATE NOCASE`;
-        db.get(request, [name], (err, row) => {
-          if (err) reject(err);
-          else resolve(row);
-        });
-      } else reject("No country name provided");
+      if (!name) {
+        reject("No country name provided");
+        return;
+      }
+
+      const request = "SELECT * from countries WHERE name = ? COLLATE NOCASE";
+
+      db.get(request, [name], (err, row) => {
+        if (err) reject(err);
+        else resolve(row);
+      });
     });
   },
 
   getAllStates() {
     return new Promise((resolve, reject) => {
-      db.all(`SELECT * from states`, [], (err, row) => {
+      db.all("SELECT * from states", [], (err, row) => {
         if (err) reject(err);
         else resolve(row);
       });
@@ -66,4 +74,4 @@ const database = {
   },
 };
 
-module.exports = database;
+export default database;

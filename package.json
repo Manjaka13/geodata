@@ -7,9 +7,9 @@
     "list",
     "geonames"
   ],
-  "license": "ISC",
+  "license": "MIT",
   "author": "harijaona <manjaka.rajaonson@gmail.com>",
-  "type": "commonjs",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",

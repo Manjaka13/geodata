@@ -1,8 +1,8 @@
-const Express = require("express");
-const cors = require("cors");
-const database = require("./interface/database.js");
-const mainroute = require("./routes/mainroute.js");
-const { PORT, ROUTES } = require("./lib/const.js");
+import Express from "express";
+import cors from "cors";
+import database from "./interface/database.js";
+import mainroute from "./routes/mainroute.js";
+import { PORT, ROUTES } from "./lib/const.js";
 
 /**
  * Main entry
@@ -11,13 +11,20 @@ const { PORT, ROUTES } = require("./lib/const.js");
 // Setup server
 const app = Express();
 
+// Start server reference
+let server;
+
 // On halt
-process.on("SIGINT", function () {
+process.on("SIGINT", () => {
   database
     .close()
     .then(() => console.log("Service successfully closed"))
-    .catch((err) => console.error("Unable to close database"))
-    .finally(app.close);
+    .catch(() => console.error("Unable to close database"))
+    .finally(() => {
+      if (server) {
+        server.close();
+      }
+    });
 });
 
 // Apply middlewares
@@ -37,7 +44,7 @@ ROUTES.forEach((route) => {
 app.use((req, res) => {
   res.status(404).send(`
     <p style='color: red'>
-      404 error - Page or ressource not found, verify the URL
+      404 error - Page or resource not found, verify the URL
     </p>
   `);
 });
@@ -46,8 +53,8 @@ app.use((req, res) => {
 database
   .connect()
   .then(() => {
-    // Awaiting for incoming request
-    app.listen(PORT, () => {
+    // Awaiting incoming requests
+    server = app.listen(PORT, () => {
       console.log(`Geonames running on port http://localhost:${PORT}`);
     });
   })

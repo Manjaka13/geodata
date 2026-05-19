@@ -1,10 +1,12 @@
-const router = require("express").Router();
-const database = require("../interface/database.js");
+import { Router } from "express";
+import database from "../interface/database.js";
 
 /**
  * States routes
  * All states: /states/all
  */
+
+const router = Router();
 
 // Get list of all states
 router.get("/all", (req, res) => {
@@ -16,4 +18,4 @@ router.get("/all", (req, res) => {
     .catch((err) => res.status(500).json(err));
 });
 
-module.exports = { path: "/states", router };
+export default { path: "/states", router };

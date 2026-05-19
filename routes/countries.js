@@ -1,11 +1,13 @@
-const router = require("express").Router();
-const database = require("../interface/database.js");
+import { Router } from "express";
+import database from "../interface/database.js";
 
 /**
  * Country routes
  * All countries: /country/all
  * A country: /country/name
  */
+
+const router = Router();
 
 // Gets all countries
 router.get("/all", (req, res) => {
@@ -29,4 +31,4 @@ router.get("/:name", (req, res) => {
     .catch((err) => res.status(500).json(err));
 });
 
-module.exports = { path: "/country", router };
+export default { path: "/country", router };
