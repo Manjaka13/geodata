@@ -19,6 +19,9 @@ RUN npm install --build-from-source
 
 COPY . .
 
+# Build TypeScript
+RUN npm run build
+
 EXPOSE 3000
 
-CMD [ "node", "index.js" ]
+CMD [ "node", "start" ]
