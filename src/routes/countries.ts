@@ -1,5 +1,6 @@
 import { Router } from "express";
-import database from "../interface/database.js";
+import database from "@interface/database.js";
+import type { AppRoute } from "@lib/types.js";
 
 /**
  * Country routes
@@ -10,13 +11,13 @@ import database from "../interface/database.js";
 const router = Router();
 
 // Gets all countries
-router.get("/all", (req, res) => {
+router.get("/all", (_, res) => {
   database
     .getAllCountries()
     .then((countries) => {
       res.status(200).json(countries);
     })
-    .catch((err) => res.status(500).json(err));
+    .catch((err: Error) => res.status(500).json(err));
 });
 
 // Gets country by name
@@ -28,7 +29,9 @@ router.get("/:name", (req, res) => {
       if (!country) res.status(404).json(`Country ${name} was not found`);
       else res.status(200).json(country);
     })
-    .catch((err) => res.status(500).json(err));
+    .catch((err: Error) => res.status(500).json(err));
 });
 
-export default { path: "/country", router };
+const route: AppRoute = { path: "/country", router };
+
+export default route;

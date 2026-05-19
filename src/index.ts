@@ -1,8 +1,12 @@
 import Express from "express";
 import cors from "cors";
-import database from "./interface/database.js";
-import mainroute from "./routes/mainroute.js";
-import { PORT, ROUTES } from "./lib/const.js";
+import database from "@interface/database.js";
+import mainroute from "@routes/mainroute.js";
+import { PORT, ROUTES } from "@lib/const.js";
+
+import type { AppRoute } from "@lib/types.js";
+
+import type { Server } from "node:http";
 
 /**
  * Main entry
@@ -12,7 +16,7 @@ import { PORT, ROUTES } from "./lib/const.js";
 const app = Express();
 
 // Start server reference
-let server;
+let server: Server;
 
 // On halt
 process.on("SIGINT", () => {
@@ -36,12 +40,12 @@ app.use(Express.json());
 app.use(mainroute.path, mainroute.router);
 
 // Setup routes
-ROUTES.forEach((route) => {
+ROUTES.forEach((route: AppRoute) => {
   app.use(route.path, route.router);
 });
 
 // 404 handler
-app.use((req, res) => {
+app.use((_, res) => {
   res.status(404).send(`
     <p style='color: red'>
       404 error - Page or resource not found, verify the URL
@@ -58,4 +62,4 @@ database
       console.log(`Geonames running on port http://localhost:${PORT}`);
     });
   })
-  .catch((err) => console.error(err));
+  .catch((err: Error) => console.error(err));

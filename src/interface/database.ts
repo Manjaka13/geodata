@@ -1,7 +1,10 @@
 import sqlite3pkg from "sqlite3";
 
+import type { Database } from "sqlite3";
+import type { Country, City, State } from "@lib/types.js";
+
 const sqlite3 = sqlite3pkg.verbose();
-let db;
+let db: Database;
 
 /**
  * SQLite3 communication interface
@@ -12,7 +15,7 @@ const database = {
     return new Promise((resolve, reject) => {
       db = new sqlite3.Database("./db.sqlite", sqlite3.OPEN_READONLY, (err) => {
         if (err) reject(err);
-        else resolve();
+        else resolve(null);
       });
     });
   },
@@ -21,7 +24,7 @@ const database = {
     return new Promise((resolve, reject) => {
       db.close((err) => {
         if (err) reject(err);
-        else resolve();
+        else resolve(null);
       });
     });
   },
@@ -32,7 +35,7 @@ const database = {
 
       db.all(request, (err, row) => {
         if (err) reject(err);
-        else resolve(row);
+        else resolve(row as City[]);
       });
     });
   },
@@ -43,12 +46,12 @@ const database = {
 
       db.all(request, (err, row) => {
         if (err) reject(err);
-        else resolve(row);
+        else resolve(row as Country[]);
       });
     });
   },
 
-  getCountry(name) {
+  getCountry(name: String) {
     return new Promise((resolve, reject) => {
       if (!name) {
         reject("No country name provided");
@@ -59,7 +62,7 @@ const database = {
 
       db.get(request, [name], (err, row) => {
         if (err) reject(err);
-        else resolve(row);
+        else resolve(row as Country);
       });
     });
   },
@@ -68,7 +71,7 @@ const database = {
     return new Promise((resolve, reject) => {
       db.all("SELECT * from states", [], (err, row) => {
         if (err) reject(err);
-        else resolve(row);
+        else resolve(row as State[]);
       });
     });
   },

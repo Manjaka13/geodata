@@ -1,5 +1,6 @@
 import { Router } from "express";
-import database from "../interface/database.js";
+import database from "@interface/database.js";
+import type { AppRoute } from "@lib/types.js";
 
 /**
  * States routes
@@ -9,7 +10,7 @@ import database from "../interface/database.js";
 const router = Router();
 
 // Get list of all states
-router.get("/all", (req, res) => {
+router.get("/all", (_, res) => {
   database
     .getAllStates()
     .then((states) => {
@@ -18,4 +19,6 @@ router.get("/all", (req, res) => {
     .catch((err) => res.status(500).json(err));
 });
 
-export default { path: "/states", router };
+const route: AppRoute = { path: "/states", router };
+
+export default route;
