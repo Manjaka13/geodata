@@ -1,0 +1,26 @@
+{
+  "name": "geonames",
+  "version": "1.0.0",
+  "description": "Serves cities list from around the world",
+  "keywords": [
+    "cities",
+    "list",
+    "geonames"
+  ],
+  "license": "ISC",
+  "author": "harijaona <manjaka.rajaonson@gmail.com>",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "clear && nodemon index.js"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "sqlite3": "^6.0.1"
+  }
+}
