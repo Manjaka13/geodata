@@ -3,9 +3,9 @@ import cors from "cors";
 import database from "@interface/database.js";
 import mainroute from "@routes/mainroute.js";
 import { PORT, ROUTES } from "@lib/const.js";
+// import flags from "../public/flags.json" with { type: "json" };
 
 import type { AppRoute } from "@lib/types.js";
-
 import type { Server } from "node:http";
 
 /**
@@ -14,6 +14,7 @@ import type { Server } from "node:http";
 
 // Setup server
 const app = Express();
+app.set("trust proxy", true);
 
 // Start server reference
 let server: Server;
@@ -25,9 +26,8 @@ process.on("SIGINT", () => {
     .then(() => console.log("Service successfully closed"))
     .catch(() => console.error("Unable to close database"))
     .finally(() => {
-      if (server) {
+      if (server)
         server.close();
-      }
     });
 });
 
@@ -35,6 +35,9 @@ process.on("SIGINT", () => {
 app.use(cors());
 app.use(Express.urlencoded({ extended: true }));
 app.use(Express.json());
+
+// Expose public
+app.use("/public", Express.static("public"));
 
 // Main path displays docSetup main route
 app.use(mainroute.path, mainroute.router);
@@ -59,7 +62,7 @@ database
   .then(() => {
     // Awaiting incoming requests
     server = app.listen(PORT, () => {
-      console.log(`Geonames running on port http://localhost:${PORT}`);
+      console.log(`Geodata running on port http://localhost:${PORT}`);
     });
   })
   .catch((err: Error) => console.error(err));
