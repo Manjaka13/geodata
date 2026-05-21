@@ -11,7 +11,7 @@ let db: Database;
  */
 
 const database = {
-  connect() {
+  connect(): Promise<null> {
     return new Promise((resolve, reject) => {
       db = new sqlite3.Database("./db.sqlite", sqlite3.OPEN_READONLY, (err) => {
         if (err) reject(err);
@@ -20,7 +20,7 @@ const database = {
     });
   },
 
-  close() {
+  close(): Promise<null> {
     return new Promise((resolve, reject) => {
       db.close((err) => {
         if (err) reject(err);
@@ -29,7 +29,7 @@ const database = {
     });
   },
 
-  getAllCities() {
+  getAllCities(): Promise<City[]> {
     return new Promise((resolve, reject) => {
       const request = "SELECT * from cities";
 
@@ -40,7 +40,7 @@ const database = {
     });
   },
 
-  getAllCountries() {
+  getAllCountries(): Promise<Country[]> {
     return new Promise((resolve, reject) => {
       const request = "SELECT * from countries";
 
@@ -51,12 +51,10 @@ const database = {
     });
   },
 
-  getCountry(name: String) {
+  getCountry(name: String): Promise<Country> {
     return new Promise((resolve, reject) => {
-      if (!name) {
+      if (!name)
         reject("No country name provided");
-        return;
-      }
 
       const request = "SELECT * from countries WHERE name = ? COLLATE NOCASE";
 
@@ -67,7 +65,7 @@ const database = {
     });
   },
 
-  getAllStates() {
+  getAllStates(): Promise<State[]> {
     return new Promise((resolve, reject) => {
       db.all("SELECT * from states", [], (err, row) => {
         if (err) reject(err);
