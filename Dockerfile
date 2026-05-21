@@ -22,9 +22,6 @@ COPY . .
 # Build TypeScript
 RUN npm run build
 
-# Ensure public is copied
-COPY public ./public
-
 EXPOSE 3000
 
 CMD [ "npm", "start" ]

@@ -3,7 +3,7 @@ import cors from "cors";
 import database from "@interface/database.js";
 import mainroute from "@routes/mainroute.js";
 import { PORT, ROUTES } from "@lib/const.js";
-// import flags from "../public/flags.json" with { type: "json" };
+import path from "node:path";
 
 import type { AppRoute } from "@lib/types.js";
 import type { Server } from "node:http";
@@ -37,7 +37,7 @@ app.use(Express.urlencoded({ extended: true }));
 app.use(Express.json());
 
 // Expose public
-app.use("/public", Express.static("public"));
+app.use("/public", Express.static(path.join(process.cwd(), "public")));
 
 // Main path displays docSetup main route
 app.use(mainroute.path, mainroute.router);
