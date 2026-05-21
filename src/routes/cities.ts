@@ -19,6 +19,18 @@ router.get("/all", (_, res) => {
     .catch((err: Error) => res.status(500).json(err));
 });
 
+// Get a city in particular
+router.get("/:name", (req, res) => {
+  const { name } = req.params;
+  database
+    .getCity(name)
+    .then((city) => {
+      if (!city) res.status(404).json(`City ${name} was not found`);
+      else res.status(200).json(city);
+    })
+    .catch((err: Error) => res.status(500).json(err));
+});
+
 const route: AppRoute = { path: "/city", router };
 
 export default route;
