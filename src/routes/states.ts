@@ -19,6 +19,6 @@ router.get("/all", (_, res) => {
     .catch((err) => res.status(500).json(err));
 });
 
-const route: AppRoute = { path: "/states", router };
+const route: AppRoute = { path: "/state", router };
 
 export default route;
