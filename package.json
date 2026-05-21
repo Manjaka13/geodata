@@ -1,22 +1,23 @@
 {
-  "name": "geonames",
+  "name": "geodata",
   "version": "1.0.0",
-  "description": "Serves cities list from around the world",
+  "description": "Serves geographic data from around the world",
   "keywords": [
     "cities",
     "list",
-    "geonames"
+    "geographic",
+    "data"
   ],
   "license": "MIT",
   "author": "harijaona <manjaka.rajaonson@gmail.com>",
   "type": "module",
   "scripts": {
-    "dev": "tsx ./src/index.ts",
+    "dev": "tsx watch ./src/index.ts",
     "build": "tsc && tsc-alias",
     "start": "node ./dist/index.js"
   },
   "devDependencies": {
-    "@tsconfig/node22": "^22.0.5",
+    "@tsconfig/node20": "^20.1.9",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/node": "^25.9.1",
