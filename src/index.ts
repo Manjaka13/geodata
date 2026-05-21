@@ -51,7 +51,8 @@ ROUTES.forEach((route: AppRoute) => {
 app.use((_, res) => {
   res.status(404).send(`
     <p style='color: red'>
-      404 error - Page or resource not found, verify the URL
+      404 error - Page or resource not found, verify the URL<br />
+      ${path.join(process.cwd(), "public")}
     </p>
   `);
 });
