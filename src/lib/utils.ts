@@ -1,4 +1,4 @@
-import type { AppRoute } from "@lib/types.js";
+import type { AppRoute, Country } from "@lib/types.js";
 
 /**
  * Utility functions

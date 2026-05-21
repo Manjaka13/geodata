@@ -14,9 +14,10 @@ export interface AppRoute {
 
 export interface Country {
   id: Number | String,
-  sortname?: String,
+  sortname: String,
   name: String,
-  phonecode?: String | Number
+  phonecode?: String | Number,
+  flag?: String
 }
 
 export interface State {

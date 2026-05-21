@@ -13,4 +13,4 @@ if (process.env?.NODE_ENV !== "production")
   dotenv.config();
 
 export const PORT: Number | String = process.env?.PORT || 80;
-export const ROUTES: AppRoute[] = [ cities, countries, states ];
+export const ROUTES: AppRoute[] = [cities, countries, states];
