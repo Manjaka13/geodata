@@ -21,6 +21,7 @@ COPY . .
 
 # Build TypeScript
 RUN npm run build
+COPY ./public ./dist
 
 EXPOSE 3000
 
